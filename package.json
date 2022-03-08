@@ -46,5 +46,9 @@
     "*.{json,md}": [
       "prettier --write"
     ]
+  },
+  "resolutions": {
+    "**/parse-url": "5.0.0",
+    "**/git-up": "4.0.2"
   }
 }
