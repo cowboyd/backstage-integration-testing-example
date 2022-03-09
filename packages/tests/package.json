@@ -8,9 +8,18 @@
     "clean": "backstage-cli clean"
   },
   "dependencies": {
+    "@backstage/backend-common": "^0.12.1",
+    "@backstage/catalog-client": "^0.8.0",
     "@backstage/cli": "^0.15.0",
+    "@backstage/config": "^0.1.15",
     "@effection/jest": "^2.0.2",
+    "@effection/process": "^2.0.4",
     "backend": "link:../backend",
-    "jest": "^27.0.0"
+    "effection": "^2.0.4",
+    "jest": "^27.0.0",
+    "knex": "^1.0.3"
+  },
+  "jest": {
+    "testTimeout": 15000
   }
 }

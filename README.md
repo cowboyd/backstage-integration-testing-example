@@ -8,3 +8,13 @@ To start the app, run:
 yarn install
 yarn dev
 ```
+
+### Tests
+
+Tests can be found in [`packages/tests/src/catalog.test.ts`](packages/tests/src/catalog.test.ts)
+
+To run them
+
+``` text
+$ yarn test
+```
