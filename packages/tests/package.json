@@ -1,0 +1,16 @@
+{
+  "name": "tests",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "backstage-cli test",
+    "test": "backstage-cli test --no-watch",
+    "clean": "backstage-cli clean"
+  },
+  "dependencies": {
+    "@backstage/cli": "^0.15.0",
+    "@effection/jest": "^2.0.2",
+    "backend": "link:../backend",
+    "jest": "^27.0.0"
+  }
+}
