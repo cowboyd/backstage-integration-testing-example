@@ -1,19 +1,12 @@
 import type { CatalogApi } from '@backstage/catalog-client';
 import { describe, beforeEach, it } from '@effection/jest';
-import { createTestLog, createBackstage, clearTestDatabases, config } from './support';
+import { createBackstage } from './support';
 
 describe("catalog ingestion", () => {
   let catalog: CatalogApi;
 
-  beforeEach(function*() {
-    yield clearTestDatabases(config);
-  });
-
   beforeEach(function* () {
-    catalog = yield createBackstage({
-      config,
-      log: yield createTestLog(),
-    });
+    catalog = yield createBackstage();
   });
 
   it('can connect to the catalog', function*() {
