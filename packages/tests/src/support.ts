@@ -4,6 +4,7 @@ import { Operation } from 'effection';
 import * as backstage from './support/backstage';
 import * as database from './support/database';
 import { createTestLog } from './support/log';
+import * as ldap from '@simulacrum/ldap-simulator';
 
 export const config = {
   backend: {
@@ -34,4 +35,15 @@ export function createBackstage(ext: Partial<typeof config> = {}): Operation<Cat
       });
     }
   }
+}
+
+export function createLDAPServer(options: Partial<ldap.LDAPStoreOptions<any>>): Operation<void> {
+  return ldap.createLDAPServer(merge({
+    log: false,
+    port: 3890,
+    baseDN: 'ou=users,dc=example.com',
+    bindDn: 'cowboyd',
+    bindPassword: 'password',
+    groupDN: 'ou=groups,dc=example.com',
+  }, options)) as Operation<void>
 }

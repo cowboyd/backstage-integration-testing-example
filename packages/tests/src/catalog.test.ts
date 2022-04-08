@@ -1,25 +1,18 @@
 import type { CatalogApi } from '@backstage/catalog-client';
 import { describe, beforeEach, it } from '@effection/jest';
-import { createLDAPServer } from '@simulacrum/ldap-simulator';
 
-import { createBackstage } from './support';
+import { createBackstage, createLDAPServer } from './support';
 
 describe("catalog ingestion", () => {
   let catalog: CatalogApi;
 
   beforeEach(function* () {
     yield createLDAPServer({
-      log: false,
-      port: 3890,
-      baseDN: 'ou=users,dc=example.com',
-      bindDn: 'cowboyd',
-      bindPassword: 'password',
-      groupDN: 'ou=groups,dc=example.com',
       users: [{
         cn: 'cowboyd',
         uid: 'cowboyd',
         name: 'Charles Lowell',
-        entryUUID: 'xyz123-cowboyd',
+        uuid: 'xyz123-cowboyd',
         mail: 'cowboyd@example.com',
         password: 'password',
         avatar: 'https://avatars.dicebear.com/api/open-peeps/cowboyd.svg'
