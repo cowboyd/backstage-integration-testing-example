@@ -1,7 +1,9 @@
+import assert from 'assert/strict';
 import { CatalogBuilder } from '@backstage/plugin-catalog-backend';
 import { ScaffolderEntitiesProcessor } from '@backstage/plugin-scaffolder-backend';
-import { LdapOrgReaderProcessor, defaultUserTransformer } from '@backstage/plugin-catalog-backend-module-ldap';
-import { merge } from 'lodash';
+import { Duration } from 'luxon';
+import { LdapOrgEntityProvider } from '@backstage/plugin-catalog-backend-module-ldap';
+
 import { Router } from 'express';
 import { PluginEnvironment } from '../types';
 
@@ -11,20 +13,19 @@ export default async function createPlugin(
   const builder = CatalogBuilder.create(env);
   builder.setProcessingIntervalSeconds(10);
 
-  builder.addProcessor(
-    LdapOrgReaderProcessor.fromConfig(env.config, {
+  const id = 'our-ldap';
+  const provider = env.config.getConfigArray('ldap.providers').find(config => config.get('id') === id);
+  assert(provider, `no ldap provider with id = '${id}' in ldap.providers`);
+
+  builder.addEntityProvider(
+    LdapOrgEntityProvider.fromConfig(env.config, {
+      id: 'our-ldap',
+      target: provider.getString('target'),
       logger: env.logger,
-      async userTransformer(vendor, config, entry) {
-        let user = await defaultUserTransformer(vendor, config, entry);
-        return merge(user, {
-          spec: {
-            profile: {
-              displayName: vendor.decodeStringAttribute(entry, 'name')[0],
-              picture: vendor.decodeStringAttribute(entry, 'avatar')[0],
-            }
-          }
-        });
-      }
+      schedule: env.scheduler.createScheduledTaskRunner({
+        frequency: Duration.fromObject({ minutes: 60 }),
+        timeout: Duration.fromObject({ minutes: 15 }),
+      }),
     }),
   );
 
