@@ -21,5 +21,12 @@
   },
   "jest": {
     "testTimeout": 15000
+  },
+  "devDependencies": {
+    "@frontside/tsconfig": "^3.0.0",
+    "@simulacrum/client": "^0.5.4",
+    "@simulacrum/ldap-simulator": "^0.4.0",
+    "@simulacrum/server": "^0.5.1",
+    "ts-node": "^10.7.0"
   }
 }

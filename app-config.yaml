@@ -117,3 +117,17 @@ catalog:
       target: https://github.com/backstage/software-templates/blob/main/scaffolder-templates/docs-template/template.yaml
       rules:
         - allow: [Template]
+
+    - type: ldap-org
+      target: ldap://localhost:3890
+
+ldap:
+  providers:
+    - target: ldap://localhost:3890
+      bind:
+        dn: cn=cowboyd,ou=users,dc=example.com
+        secret: password
+      users:
+        dn: "ou=users,dc=example.com"
+      groups:
+        dn: "ou=groups,dc=example.com"
